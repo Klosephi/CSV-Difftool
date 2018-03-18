@@ -18,6 +18,9 @@ public class CSVDiff {
 
     private final char delimiter;
     private final Set<String> keys = new HashSet<String>();
+    private List<RecordTuple> comparison;
+    private Map<String, Integer> baseDuplicatedKeys;
+    private Map<String, Integer> actualDuplicatedKeys;
 
     public CSVDiff(String... keys) {
         this.keys.addAll(Arrays.asList(keys));
@@ -42,10 +45,16 @@ public class CSVDiff {
     }
 
     public List<RecordTuple> compare () {
-        List<RecordTuple> comparison = new ArrayList<RecordTuple>();
+        if (comparison != null) {
+            return comparison;
+        }
 
-        Map<String, CSVRecord> baseRecords = createRecordMap(baseParser);
-        Map<String, CSVRecord> actualRecords = createRecordMap(actualParser);
+        comparison = new ArrayList<RecordTuple>();
+        baseDuplicatedKeys = new HashMap<String, Integer>();
+        actualDuplicatedKeys = new HashMap<String, Integer>();
+
+        Map<String, CSVRecord> baseRecords = createRecordMap(baseParser, baseDuplicatedKeys);
+        Map<String, CSVRecord> actualRecords = createRecordMap(actualParser, actualDuplicatedKeys);
 
 
 
@@ -103,7 +112,9 @@ public class CSVDiff {
 
 
 
-    public Map<String, CSVRecord> createRecordMap (CSVParser parser) {
+
+
+    public Map<String, CSVRecord> createRecordMap (CSVParser parser, Map<String, Integer> keyCounter) {
 
         Map<String, CSVRecord> keyRecords = new TreeMap<String, CSVRecord>();
 
@@ -113,6 +124,13 @@ public class CSVDiff {
                 surrogateKey += key + ":" + record.get(key) + "|";
             }
             keyRecords.put(surrogateKey, record);
+
+            if (keyCounter.containsKey(surrogateKey)) {
+                Integer integer = keyCounter.get(surrogateKey);
+                integer++;
+            } else {
+                keyCounter.put(surrogateKey, 0);
+            }
         }
 
         return keyRecords;

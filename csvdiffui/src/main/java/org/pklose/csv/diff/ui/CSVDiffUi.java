@@ -31,6 +31,7 @@ public class CSVDiffUi {
     private JList actualHeader;
     private JButton findHeadersButton;
     private JList unequalActualHeaders;
+    private JCheckBox hideEqualResultsCheckBox;
 
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
@@ -78,7 +79,7 @@ public class CSVDiffUi {
                     FileWriter fileWriter = new FileWriter(new File(resultFileName.getText()));
 
                     ResultPrinter resultPrinter = new ResultPrinter(fileWriter);
-                    resultPrinter.printResult(csvDiff.compare(), csvDiff.getBaseHeaderList());
+                    resultPrinter.printResult(csvDiff.compare(), csvDiff.getBaseHeaderList(), hideEqualResultsCheckBox.isSelected());
 
                     JOptionPane.showMessageDialog(null, "Comparison done, find the result here "+ resultFileName.getText());
                     log.info("Comparision finished");
