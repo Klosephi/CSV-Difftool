@@ -127,7 +127,7 @@ public class CSVDiff {
 
             if (keyCounter.containsKey(surrogateKey)) {
                 Integer integer = keyCounter.get(surrogateKey);
-                integer++;
+                keyCounter.put(surrogateKey, integer + 1);
             } else {
                 keyCounter.put(surrogateKey, 0);
             }
@@ -136,6 +136,23 @@ public class CSVDiff {
         return keyRecords;
     }
 
+    public Map<String, Integer> getBaseDuplicatedKeys() {
+        return baseDuplicatedKeys;
+    }
 
+    public Map<String, Integer> getActualDuplicatedKeys() {
+        return actualDuplicatedKeys;
+    }
 
+    public static List<String> getKeysGreateThan (Map<String, Integer> map, int g) {
+
+        List<String> keys = new ArrayList<String>();
+        for (Map.Entry<String, Integer> entry : map.entrySet()) {
+            if (entry.getValue() > g) {
+                keys.add(entry.getKey());
+            }
+        }
+
+        return keys;
+    }
 }

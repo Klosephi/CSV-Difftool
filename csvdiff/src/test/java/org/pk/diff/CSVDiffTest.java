@@ -14,6 +14,8 @@ public class CSVDiffTest {
     public void testCompare2 () throws IOException {
         CSVDiff csvDiff = new CSVDiff("Pfnr", "PfnrShortName");
         csvDiff.load("src/test/ressources/PORTFOLIOSTAMM.csv", "src/test/ressources/PORTFOLIOSTAMM-Actual.csv");
+
+
         List<RecordTuple> compare = csvDiff.compare();
 
 

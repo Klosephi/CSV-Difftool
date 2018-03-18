@@ -32,6 +32,9 @@ public class CSVDiffUi {
     private JButton findHeadersButton;
     private JList unequalActualHeaders;
     private JCheckBox hideEqualResultsCheckBox;
+    private JList duplicatedBaseKeys;
+    private JList duplicatedActualKeys;
+    private JButton findDuplicatedKeysButton;
 
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
@@ -98,6 +101,21 @@ public class CSVDiffUi {
                     actualHeader.setListData(csvDiff.getActualHeaderList().toArray());
                     baseHeader.setListData(csvDiff.getBaseHeaderList().toArray());
 
+
+
+                } catch (IOException e1) {
+                    log.log(Level.WARNING, e1.getMessage());
+                    JOptionPane.showMessageDialog(null, e1.getMessage(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+        findDuplicatedKeysButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                CSVDiff csvDiff = getCsvDiff();
+                csvDiff.compare();
+                duplicatedActualKeys.setListData(CSVDiff.getKeysGreateThan(csvDiff.getActualDuplicatedKeys(), 1).toArray());
+                duplicatedBaseKeys.setListData(CSVDiff.getKeysGreateThan(csvDiff.getBaseDuplicatedKeys(), 1).toArray());
                 } catch (IOException e1) {
                     log.log(Level.WARNING, e1.getMessage());
                     JOptionPane.showMessageDialog(null, e1.getMessage(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
