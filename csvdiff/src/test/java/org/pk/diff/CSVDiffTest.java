@@ -18,7 +18,7 @@ public class CSVDiffTest {
 
 
         FileWriter fileWriter = new FileWriter("src/test/ressources/result.csv");
-        new ResultPrinter(fileWriter).printResult(compare, csvDiff.getHeaderList());
+        new ResultPrinter(fileWriter).printResult(compare, csvDiff.getBaseHeaderList());
 
 
     }

@@ -35,7 +35,7 @@ public class Main {
             csvDiff.load(baseFile, actualFile);
 
             ResultPrinter resultPrinter = new ResultPrinter(new FileWriter(destinationFile));
-            resultPrinter.printResult(csvDiff.compare(), csvDiff.getHeaderList());
+            resultPrinter.printResult(csvDiff.compare(), csvDiff.getBaseHeaderList());
 
         } catch (ParseException e) {
             e.printStackTrace();

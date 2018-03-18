@@ -27,6 +27,9 @@ public class CSVDiffUi {
     private JButton compareButton;
     private JPanel mainPanel;
     private JTextField delimiter;
+    private JList baseHeader;
+    private JList actualHeader;
+    private JButton analyzeHeadersButton;
 
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
@@ -70,14 +73,11 @@ public class CSVDiffUi {
             public void actionPerformed(ActionEvent e) {
 
                 try {
-                    String[] split = StringUtils.split(primaryKeys.getText(), ",");
-                    CSVDiff csvDiff = new CSVDiff(delimiter.getText().charAt(0), split);
-                    csvDiff.load(baseFileName.getText(), actualFileName.getText());
-
+                    CSVDiff csvDiff = getCsvDiff();
                     FileWriter fileWriter = new FileWriter(new File(resultFileName.getText()));
 
                     ResultPrinter resultPrinter = new ResultPrinter(fileWriter);
-                    resultPrinter.printResult(csvDiff.compare(), csvDiff.getHeaderList());
+                    resultPrinter.printResult(csvDiff.compare(), csvDiff.getBaseHeaderList());
 
                     JOptionPane.showMessageDialog(null, "Comparison  Done find the result here "+ resultFileName.getText());
                     log.info("Comparision finished");
@@ -89,6 +89,25 @@ public class CSVDiffUi {
 
             }
         });
+        analyzeHeadersButton.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                try {
+                    CSVDiff csvDiff = getCsvDiff();
+                    actualHeader.setListData(csvDiff.getActualHeaderList().toArray());
+                    baseHeader.setListData(csvDiff.getBaseHeaderList().toArray());
+                } catch (IOException e1) {
+                    log.log(Level.WARNING, e1.getMessage());
+                    JOptionPane.showMessageDialog(null, mainPanel.toString(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
+                }
+            }
+        });
+    }
+
+    private CSVDiff getCsvDiff() throws IOException {
+        String[] split = StringUtils.split(primaryKeys.getText(), ",");
+        CSVDiff csvDiff = new CSVDiff(delimiter.getText().charAt(0), split);
+        csvDiff.load(baseFileName.getText(), actualFileName.getText());
+        return csvDiff;
     }
 
     private void enableCompareButton () {

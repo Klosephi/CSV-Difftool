@@ -50,13 +50,13 @@ public class CSVDiff {
 
 
         for (String key : baseRecords.keySet()) {
-            RecordTuple recordTuple = new RecordTuple(baseRecords.get(key),actualRecords.get(key),key, getHeaderList());
+            RecordTuple recordTuple = new RecordTuple(baseRecords.get(key),actualRecords.get(key),key, getBaseHeaderList());
             comparison.add(recordTuple);
         }
 
         for (String key : actualRecords.keySet()) {
             if (!baseRecords.containsKey(key)) {
-                RecordTuple recordTuple = new RecordTuple(baseRecords.get(key),actualRecords.get(key),key, getHeaderList());
+                RecordTuple recordTuple = new RecordTuple(baseRecords.get(key),actualRecords.get(key),key, getBaseHeaderList());
                 comparison.add(recordTuple);
             }
         }
@@ -66,10 +66,20 @@ public class CSVDiff {
         return comparison;
     }
 
-    public List<String> getHeaderList () {
+    public List<String> getBaseHeaderList() {
         List<String> headerList = new ArrayList<String>();
 
         for (Map.Entry<String, Integer> stringIntegerEntry : baseParser.getHeaderMap().entrySet()) {
+            headerList.add(stringIntegerEntry.getValue(), stringIntegerEntry.getKey());
+        }
+
+        return headerList;
+    }
+
+    public List<String> getActualHeaderList() {
+        List<String> headerList = new ArrayList<String>();
+
+        for (Map.Entry<String, Integer> stringIntegerEntry : actualParser.getHeaderMap().entrySet()) {
             headerList.add(stringIntegerEntry.getValue(), stringIntegerEntry.getKey());
         }
 
