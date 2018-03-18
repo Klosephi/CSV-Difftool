@@ -22,3 +22,10 @@
 hs_err_pid*
 csvdiff/.idea/compiler.xml
 csvdiff/.idea/*
+csvdiff/target/*
+*.iml
+csvdiffui/.idea/misc.xml
+csvdiffui/.idea/modules.xml
+csvdiffui/.idea/workspace.xml
+csvdiffui/target/Test
+*.csv
