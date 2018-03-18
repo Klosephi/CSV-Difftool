@@ -73,6 +73,7 @@ public class CSVDiff {
             headerList.add(stringIntegerEntry.getValue(), stringIntegerEntry.getKey());
         }
 
+        Collections.sort(headerList);
         return headerList;
     }
 
@@ -83,14 +84,28 @@ public class CSVDiff {
             headerList.add(stringIntegerEntry.getValue(), stringIntegerEntry.getKey());
         }
 
+        Collections.sort(headerList);
         return headerList;
+    }
+
+    public List<String> getDifferingHeaders () {
+        List<String> difference = new ArrayList<String>();
+        List<String> baseHeaderList = getBaseHeaderList();
+        List<String> actualHeaderList = getActualHeaderList();
+        for (int i = 0; i< baseHeaderList.size() && i < actualHeaderList.size(); i++) {
+            if (!baseHeaderList.get(i).equals(actualHeaderList.get(i))) {
+                difference.add(actualHeaderList.get(i));
+            }
+        }
+
+        return difference;
     }
 
 
 
     public Map<String, CSVRecord> createRecordMap (CSVParser parser) {
 
-        Map<String, CSVRecord> keyRecords = new HashMap<String, CSVRecord>();
+        Map<String, CSVRecord> keyRecords = new TreeMap<String, CSVRecord>();
 
         for (CSVRecord record : parser) {
             String surrogateKey = "";
@@ -102,5 +117,7 @@ public class CSVDiff {
 
         return keyRecords;
     }
+
+
 
 }

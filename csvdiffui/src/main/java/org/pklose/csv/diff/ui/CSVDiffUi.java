@@ -29,7 +29,8 @@ public class CSVDiffUi {
     private JTextField delimiter;
     private JList baseHeader;
     private JList actualHeader;
-    private JButton analyzeHeadersButton;
+    private JButton findHeadersButton;
+    private JList unequalActualHeaders;
 
     private static final Logger log = Logger.getLogger(Main.class.getName());
 
@@ -79,25 +80,26 @@ public class CSVDiffUi {
                     ResultPrinter resultPrinter = new ResultPrinter(fileWriter);
                     resultPrinter.printResult(csvDiff.compare(), csvDiff.getBaseHeaderList());
 
-                    JOptionPane.showMessageDialog(null, "Comparison  Done find the result here "+ resultFileName.getText());
+                    JOptionPane.showMessageDialog(null, "Comparison done, find the result here "+ resultFileName.getText());
                     log.info("Comparision finished");
                     log.info(resultFileName.toString());
                 } catch (IOException e1) {
                     log.log(Level.WARNING, e1.getMessage());
-                    JOptionPane.showMessageDialog(null, mainPanel.toString(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, e1.getMessage(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
                 }
 
             }
         });
-        analyzeHeadersButton.addActionListener(new ActionListener() {
+        findHeadersButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 try {
                     CSVDiff csvDiff = getCsvDiff();
                     actualHeader.setListData(csvDiff.getActualHeaderList().toArray());
                     baseHeader.setListData(csvDiff.getBaseHeaderList().toArray());
+
                 } catch (IOException e1) {
                     log.log(Level.WARNING, e1.getMessage());
-                    JOptionPane.showMessageDialog(null, mainPanel.toString(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(null, e1.getMessage(), "Runtime Error" , JOptionPane.ERROR_MESSAGE);
                 }
             }
         });
@@ -116,8 +118,10 @@ public class CSVDiffUi {
                 resultFileName.getText().equals("")||
                 primaryKeys.getText().equals("")) {
             compareButton.setEnabled(false);
+            findHeadersButton.setEnabled(false);
         } else {
             compareButton.setEnabled(true);
+            findHeadersButton.setEnabled(true);
         }
     }
 
