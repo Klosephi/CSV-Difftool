@@ -24,8 +24,12 @@ csvdiff/.idea/compiler.xml
 csvdiff/.idea/*
 csvdiff/target/*
 *.iml
-csvdiffui/.idea/misc.xml
+csvdiffui/.idea/*
 csvdiffui/.idea/modules.xml
 csvdiffui/.idea/workspace.xml
 csvdiffui/target/Test
 *.csv
+csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
+csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
+csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
