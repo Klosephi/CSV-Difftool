@@ -11,7 +11,6 @@
 .mtj.tmp/
 
 # Package Files #
-*.jar
 *.war
 *.ear
 *.zip
@@ -27,7 +26,7 @@ csvdiff/target/*
 csvdiffui/.idea/*
 csvdiffui/.idea/modules.xml
 csvdiffui/.idea/workspace.xml
-csvdiffui/target/Test
+csvdiffui/target/*
 *.csv
 csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst
 csvdiffui/target/maven-status/maven-compiler-plugin/compile/default-compile/inputFiles.lst
